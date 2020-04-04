@@ -1,0 +1,40 @@
+This is an example of best mean and standard deviation using the Maximum-Likelihood Estimation, its based on:
+https://www.r-bloggers.com/fitting-a-model-by-maximum-likelihood/
+
+"It basically sets out to answer the question: what model parameters are most likely to characterise a given set of data? First you need to select a model for the data. And the model must have one or more (unknown) parameters. As the name implies, MLE proceeds to maximise a likelihood function, which in turn maximises the agreement between the model and the data."
+
+```{r}
+#Generating the data normally distributed
+set.seed(1001)
+
+N <- 100
+
+x <- rnorm(N, mean = 3, sd = 2)
+
+mean(x)
+sd(x)
+
+
+
+#Formulating the log-likelihood function
+
+LL <- function(mu, sigma) {
+     R = dnorm(x, mu, sigma)
+     -sum(log(R))
+ }
+
+```
+
+Okay, now the apply the MLE to estimate the mean and the standard deviation 
+
+```{r}
+library(stats4)
+
+
+mle(LL, start = list(mu = 1, sigma=1))
+
+
+```
+
+Estimated coefficients are - mean = 3.012174, and std = 1.599490, what is pretty similar to the real ones
+
